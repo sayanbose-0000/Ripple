@@ -21,12 +21,12 @@ const Login = () => {
     <main className="register_main">
       <form className="register">
         <h1>Login</h1>
-        <input type="text" name="email" id="email" placeholder="Enter email" required autoFocus autoComplete="email" />
+        <input type="email" name="email" id="email" placeholder="Enter email" required autoFocus autoComplete="email" />
         <div className="password_div">
           <input type="password" name="password" id="password" placeholder="Enter password" required autoComplete="new-password" ref={passRef} />
           <img src={passVisibleIcon} alt="" onClick={e => handleTooglePassVisibility(e)} />
         </div>
-        <button type="submit">Signup</button>
+        <button type="submit">Login</button>
         <p className="already_done">Not registered? <Link className="link" to={"/signup"}>Signup</Link></p>
       </form>
     </main>
