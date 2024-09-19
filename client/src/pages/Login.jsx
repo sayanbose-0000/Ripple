@@ -27,7 +27,7 @@ const Login = () => {
           <img src={passVisibleIcon} alt="" onClick={e => handleTooglePassVisibility(e)} />
         </div>
         <button type="submit">Login</button>
-        <p className="already_done">Not registered? <Link className="link" to={"/signup"}>Signup</Link></p>
+        <p className="already_done">Not registered? <Link className="Link" to={"/signup"}>Signup</Link></p>
       </form>
     </main>
   );

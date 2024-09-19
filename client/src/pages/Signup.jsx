@@ -79,7 +79,7 @@ const Signup = () => {
           <img src={passVisibleIcon} alt="" onClick={e => handleTooglePassVisibility(e)} />
         </div>
         <button type="submit">Signup</button>
-        <p className="already_done">Already registered? <Link className="link" to={"/login"}>Login</Link></p>
+        <p className="already_done">Already registered? <Link className="Link" to={"/login"}>Login</Link></p>
       </form>
     </main>
 
