@@ -8,11 +8,11 @@ const Login = () => {
 
   const handleTooglePassVisibility = (e) => {
     if (passRef.current.type === "password") {
-      passRef.current.type = "text"
+      passRef.current.type = "text";
       setPassVisibleIcon("eye-open.svg");
     }
     else {
-      passRef.current.type = "password"
+      passRef.current.type = "password";
       setPassVisibleIcon("eye-close.svg");
     }
   }

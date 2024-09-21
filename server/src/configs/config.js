@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import { v2 as cloudinary } from "cloudinary";
 import multer from "multer";
 dotenv.config();
 
@@ -15,5 +16,8 @@ const corsOptions = {
 
 const storage = multer.memoryStorage();
 const UPLOAD = multer({ storage: storage });
+cloudinary.config({
+  CLOUDINARY_URL: process.env.CLOUDINARY_URL
+});
 
 export { PORT, FRONT_URL, corsOptions, MONGO_URI, UPLOAD };

@@ -17,6 +17,11 @@ const UserSchema = mongoose.Schema({
     required: true,
   },
 
+  dpUrl: {
+    type: String,
+    required: true
+  },
+  
   createdAt: {
     type: Date,
     default: Date.now
