@@ -32,7 +32,7 @@ const signup = (req, res) => {
       })
 
       try {
-        var token = jwt.sign({ username: userSignupDoc.username, email: userSignupDoc.email }, JWT_SECRET);
+        var token = jwt.sign({ username: userSignupDoc.username, email: userSignupDoc.email, dp: dpUrl }, JWT_SECRET);
 
         res.cookie('token', token, {
           path: '/',

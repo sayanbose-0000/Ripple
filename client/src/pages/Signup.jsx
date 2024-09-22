@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import "../styles/register.scss";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { BACK_URL } from "../configs/config";
 import { toast } from "react-hot-toast";
 
@@ -13,6 +13,7 @@ const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [dp, setDp] = useState(null);
+  const [redirect, setRedirect] = useState(false);
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -31,6 +32,12 @@ const Signup = () => {
 
     const result = await response.json();
     response.ok ? toast.success(result.message) : toast.error(result.message);
+
+    if (response.ok) {
+      setRedirect(true)
+
+
+    };
   }
 
   const handleTooglePassVisibility = (e) => {
@@ -60,6 +67,10 @@ const Signup = () => {
         setDp(file);
       }
     }
+  }
+
+  if (redirect) {
+    return <Navigate to={"/"} />
   }
 
   return (
