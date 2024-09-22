@@ -18,4 +18,4 @@ app.use("/auth", UPLOAD.single("dp"), authRoutes);
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port http://localhost:${PORT}`);
-})
+});
