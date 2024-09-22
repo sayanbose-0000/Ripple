@@ -29,10 +29,8 @@ const Signup = () => {
       body: formData
     })
 
-    if (!response.ok) {
-      const result = await response.json();
-      toast.error(result.message);
-    }
+    const result = await response.json();
+    response.ok ? toast.success(result.message) : toast.error(result.message);
   }
 
   const handleTooglePassVisibility = (e) => {
