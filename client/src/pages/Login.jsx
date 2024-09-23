@@ -17,6 +17,7 @@ const Login = () => {
       passRef.current.type = "text";
       setPassVisibleIcon("eye-open.svg");
     }
+
     else {
       passRef.current.type = "password";
       setPassVisibleIcon("eye-close.svg");
@@ -60,7 +61,7 @@ const Login = () => {
           <input type="password" name="password" id="password" placeholder="Enter password" required autoComplete="new-password" ref={passRef} value={password} onChange={e => setPassword(e.target.value)} />
           <img src={passVisibleIcon} alt="" onClick={e => handleTooglePassVisibility(e)} />
         </div>
-        {loading ? <button type="submit"><img src="loading.svg" alt="loading" /> </button> : <button type="submit">Login</button>}
+        {loading ? <button type="submit"><img src="loading.svg" alt="loading" /></button> : <button type="submit">Login</button>}
         <p className="already_done">Not registered? <Link className="Link" to={"/signup"}>Signup</Link></p>
       </form>
     </main>

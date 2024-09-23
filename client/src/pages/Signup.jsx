@@ -89,7 +89,7 @@ const Signup = () => {
           <input type="password" name="password" id="password" placeholder="Enter password" autoComplete="new-password" ref={passRef} value={password} onChange={e => setPassword(e.target.value)} />
           <img src={passVisibleIcon} alt="" onClick={e => handleTooglePassVisibility(e)} />
         </div>
-        {loading ? <button type="submit"><img src="loading.svg" alt="loading" /> </button> : <button type="submit">Signup</button>}
+        {loading ? <button type="submit"><img src="loading.svg" alt="loading" /></button> : <button type="submit">Signup</button>}
         <p className="already_done">Already registered? <Link className="Link" to={"/login"}>Login</Link></p>
       </form>
     </main>

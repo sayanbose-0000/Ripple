@@ -67,7 +67,13 @@ const login = async (req, res) => {
   const { email, password } = req.body;
   try {
     const userLoginDoc = await UserModel.findOne({ email });
-    const passwordIsOkay = bcrypt.compare(password, userLoginDoc.password);
+
+    if (!userLoginDoc) {
+      res.status(401).json({ message: "User doesn't exist" });
+      return;
+    }
+
+    const passwordIsOkay = await bcrypt.compare(password, userLoginDoc.password);
 
     if (passwordIsOkay) {
       var token = jwt.sign({ username: userLoginDoc.username, email: userLoginDoc.email, dp: userLoginDoc.dpUrl }, JWT_SECRET);
@@ -77,16 +83,19 @@ const login = async (req, res) => {
         maxAge: 1000 * 60 * 60 * 24 * 30, // token valid for a month
         sameSite: NODE_ENV === "Development" ? "lax" : "none",
         secure: NODE_ENV !== "Development"
-      })
+      });
 
       res.status(200).json({ message: "Login successful!" });
     }
+
     else {
-      res.status(401).json({ message: "Incorrect Credentials", err: err });
+      console.log("Pass not founds")
+      res.status(401).json({ message: "Incorrect Credentials" });
     }
   }
+
   catch (err) {
-    res.status(401).json({ message: "Email doesn't exist, Please Singup", err: err });
+    res.status(500).json({ message: "Internal Server Error", err: err });
   }
 }
 
