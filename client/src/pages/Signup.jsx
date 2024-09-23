@@ -14,10 +14,12 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [dp, setDp] = useState(null);
   const [redirect, setRedirect] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSignup = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
     const formData = new FormData(); // used so that image can be send
     formData.append("email", email);
     formData.append("username", username);
@@ -36,6 +38,8 @@ const Signup = () => {
     if (response.ok) {
       setRedirect(true);
     };
+
+    setLoading(false);
   }
 
   const handleTooglePassVisibility = (e) => {
@@ -85,7 +89,7 @@ const Signup = () => {
           <input type="password" name="password" id="password" placeholder="Enter password" autoComplete="new-password" ref={passRef} value={password} onChange={e => setPassword(e.target.value)} />
           <img src={passVisibleIcon} alt="" onClick={e => handleTooglePassVisibility(e)} />
         </div>
-        <button type="submit">Signup</button>
+        {loading ? <button type="submit"><img src="loading.svg" alt="loading" /> </button> : <button type="submit">Signup</button>}
         <p className="already_done">Already registered? <Link className="Link" to={"/login"}>Login</Link></p>
       </form>
     </main>

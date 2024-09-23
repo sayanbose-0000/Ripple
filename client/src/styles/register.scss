@@ -77,6 +77,24 @@
     cursor: pointer;
     background-color: lightgreen;
     margin: 10px;
+    min-width: 40%;
+    max-height: 46px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      animation: spin 2s linear infinite;
+      
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    }
   }
 
   button:hover {

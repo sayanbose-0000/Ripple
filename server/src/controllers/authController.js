@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import UserModel from "../models/UserModel.js";
 import { NODE_ENV, JWT_SECRET } from "../configs/config.js";
 import { imageUploadingToCloudinary } from "../helpers/CloudinaryUpload.js";
+import { v2 as cloudinary } from "cloudinary";
 
 const signup = (req, res) => {
   const { email, username, password } = req.body;
@@ -20,8 +21,12 @@ const signup = (req, res) => {
       return;
     }
 
+    let dp_public_id;
+
     try {
-      const dpSecureUrl = await imageUploadingToCloudinary(dp, res);
+      const dpresult = await imageUploadingToCloudinary(dp, res);
+      const dpSecureUrl = dpresult.dpSecureUrl;
+      dp_public_id = dpresult.dp_public_id;
 
       const userSignupDoc = await UserModel.create({
         username,
@@ -31,7 +36,7 @@ const signup = (req, res) => {
       })
 
       try {
-        var token = jwt.sign({ username: userSignupDoc.username, email: userSignupDoc.email, dp: dpUrl }, JWT_SECRET);
+        var token = jwt.sign({ username: userSignupDoc.username, email: userSignupDoc.email, dp: userSignupDoc.dpUrl }, JWT_SECRET);
 
         res.cookie('token', token, {
           path: '/',
@@ -51,10 +56,38 @@ const signup = (req, res) => {
     }
 
     catch (err) {
-      res.status(500).json({ message: "Error contacting database!", err: err });
+      res.status(500).json({ message: "User already exists! Please Login!", err: err });
+      cloudinary.uploader.destroy(dp_public_id);
       return;
     }
   })
 }
 
-export { signup };
+const login = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const userLoginDoc = await UserModel.findOne({ email });
+    const passwordIsOkay = bcrypt.compare(password, userLoginDoc.password);
+
+    if (passwordIsOkay) {
+      var token = jwt.sign({ username: userLoginDoc.username, email: userLoginDoc.email, dp: userLoginDoc.dpUrl }, JWT_SECRET);
+      res.cookie("token", token, {
+        path: '/',
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24 * 30, // token valid for a month
+        sameSite: NODE_ENV === "Development" ? "lax" : "none",
+        secure: NODE_ENV !== "Development"
+      })
+
+      res.status(200).json({ message: "Login successful!" });
+    }
+    else {
+      res.status(401).json({ message: "Incorrect Credentials", err: err });
+    }
+  }
+  catch (err) {
+    res.status(401).json({ message: "Email doesn't exist, Please Singup", err: err });
+  }
+}
+
+export { signup, login };

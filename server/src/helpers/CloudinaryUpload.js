@@ -9,7 +9,6 @@ const imageUploadingToCloudinary = async (dp, res) => {
   }
 
   const imgSizekb = dp.size / 1000;
-  console.log(imgSizekb);
 
   if (imgSizekb > 2000) {
     res.status(415).json({ message: "Image must not exceed 2mb" });
@@ -19,11 +18,12 @@ const imageUploadingToCloudinary = async (dp, res) => {
   try {
     const dpUpload = `data:${dp.mimetype};base64,${dp.buffer.toString('base64')}`
     const cloudinaryResult = await cloudinary.uploader.upload(dpUpload, cloudinaryOptions);
-    return cloudinaryResult.secure_url;
+    return { dpSecureUrl: cloudinaryResult.secure_url, dp_public_id: cloudinaryResult.public_id };
   }
 
   catch (err) {
     res.status(500).json({ message: "Error uploading dp!", err: err });
+    return;
   }
 }
 
