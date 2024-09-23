@@ -1,9 +1,8 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { v2 as cloudinary } from "cloudinary";
 import UserModel from "../models/UserModel.js";
 import { NODE_ENV, JWT_SECRET } from "../configs/config.js";
-import { imageUploadingToCloudinary } from "../helpers/helper.js";
+import { imageUploadingToCloudinary } from "../helpers/CloudinaryUpload.js";
 
 const signup = (req, res) => {
   const { email, username, password } = req.body;
@@ -56,7 +55,6 @@ const signup = (req, res) => {
       return;
     }
   })
-
 }
 
 export { signup };

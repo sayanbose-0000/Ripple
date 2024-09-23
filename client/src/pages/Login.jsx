@@ -5,6 +5,8 @@ import { useRef, useState } from "react";
 const Login = () => {
   const passRef = useRef(null);
   const [passVisibleIcon, setPassVisibleIcon] = useState("eye-close.svg");
+  const[email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleTooglePassVisibility = (e) => {
     if (passRef.current.type === "password") {

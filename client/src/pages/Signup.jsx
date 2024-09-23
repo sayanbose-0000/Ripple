@@ -28,15 +28,13 @@ const Signup = () => {
       method: "POST",
       credentials: "include",
       body: formData
-    })
+    });
 
     const result = await response.json();
     response.ok ? toast.success(result.message) : toast.error(result.message);
 
     if (response.ok) {
-      setRedirect(true)
-
-
+      setRedirect(true);
     };
   }
 
@@ -78,7 +76,7 @@ const Signup = () => {
       <form className="register" onSubmit={e => handleSignup(e)}>
         <h1>Signup</h1>
         <div className="dp_container">
-          <img className="dp" src={dpImage} alt="" onClick={e => handleImagePick(e)} />
+          <img className="dp" src={dpImage} alt="dp" onClick={e => handleImagePick(e)} />
           <input type="file" name="input_dp" id="input_dp" className="input_dp" ref={imgRef} onChange={e => handleOnChange(e)} />
         </div>
         <input type="email" name="email" id="email" placeholder="Enter email" autoFocus autoComplete="email" value={email} onChange={e => setEmail(e.target.value)} />
