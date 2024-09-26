@@ -99,4 +99,20 @@ const login = async (req, res) => {
   }
 }
 
-export { signup, login };
+
+const profile = (req, res) => {
+  const { token } = req.cookies;
+
+
+  if (token) {
+    const profileInfo = jwt.verify(token, JWT_SECRET);
+    res.status(200).json({ message: profileInfo });
+  }
+
+  else {
+    res.status(401).json({ message: "Error signing token" });
+    return;
+  }
+}
+
+export { signup, login, profile };

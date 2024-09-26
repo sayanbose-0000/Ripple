@@ -1,7 +1,7 @@
 import { useState } from "react"
 import UserAuthContext from "./UserAuthContext";
 
-const UserContextProvider = ({ children }) => {
+const UserAuthContextProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState({});
   return (
     <UserAuthContext.Provider value={{ userInfo, setUserInfo }}>
@@ -10,4 +10,4 @@ const UserContextProvider = ({ children }) => {
   )
 }
 
-export default UserContextProvider;
+export default UserAuthContextProvider;
