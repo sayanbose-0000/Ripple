@@ -10,7 +10,7 @@ const Home = () => {
   const { userInfo, setUserInfo } = useContext(UserAuthContext);
   const [redirect, setRedirect] = useState(false);
   const [showSideBar, setShowSideBar] = useState(false);
-  // const isMounted = useRef(false);
+  const showContactAreaRef = useRef("contactarea hidecontactarea");
 
   useEffect(() => {
     const verifyUser = async () => {
@@ -35,34 +35,14 @@ const Home = () => {
     verifyUser();
   }, []);
 
-  // useEffect(() => {
-
-  //   const resizeShow = () => {
-  //     if (window.innerWidth < 768) {
-  //       setShowSideBar(false);
-  //     }
-  //     else {
-  //       setShowSideBar(true);
-  //     }
-  //   }
-
-  //   window.addEventListener("resize", resizeShow);
-
-  //   resizeShow();
-
-  //   return () => {
-  //     window.removeEventListener("resize", resizeShow);
-  //   };
-  // }, [])
-
   if (redirect) {
     return <Navigate to={"/login"} />
   }
 
   return (
     <div className="home">
-      {showSideBar ? <ContactArea showSideBar={showSideBar} setShowSideBar={setShowSideBar} /> : null}
-      <MessageArea showSideBar={showSideBar} setShowSideBar={setShowSideBar} />
+      <ContactArea showContactAreaRef={showContactAreaRef} />
+      <MessageArea showContactAreaRef={showContactAreaRef} />
     </div>
   );
 };
