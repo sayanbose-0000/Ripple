@@ -1,12 +1,16 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { BACK_URL } from "../configs/config";
 import UserAuthContext from "../hooks/UserAuthContext";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+import "../styles/home.scss";
+import ContactArea from "../components/ContactArea";
+import MessageArea from "../components/MessageArea";
 
 const Home = () => {
   const { userInfo, setUserInfo } = useContext(UserAuthContext);
   const [redirect, setRedirect] = useState(false);
-  const isMounted = useRef(false);
+  const [showSideBar, setShowSideBar] = useState(false);
+  // const isMounted = useRef(false);
 
   useEffect(() => {
     const verifyUser = async () => {
@@ -22,6 +26,7 @@ const Home = () => {
 
         setUserInfo(userResult);
       }
+
       else {
         setRedirect(true);
       }
@@ -30,24 +35,35 @@ const Home = () => {
     verifyUser();
   }, []);
 
-  useEffect(() => {
-    if (isMounted.current && Object.keys(userInfo).length > 0) {
-      // code
-    }
+  // useEffect(() => {
 
-    else {
-      isMounted.current = true;
-    }
-  }, [userInfo]);
+  //   const resizeShow = () => {
+  //     if (window.innerWidth < 768) {
+  //       setShowSideBar(false);
+  //     }
+  //     else {
+  //       setShowSideBar(true);
+  //     }
+  //   }
+
+  //   window.addEventListener("resize", resizeShow);
+
+  //   resizeShow();
+
+  //   return () => {
+  //     window.removeEventListener("resize", resizeShow);
+  //   };
+  // }, [])
 
   if (redirect) {
     return <Navigate to={"/login"} />
   }
 
   return (
-    <>
-      <p>Home</p>
-    </>
+    <div className="home">
+      {showSideBar ? <ContactArea showSideBar={showSideBar} setShowSideBar={setShowSideBar} /> : null}
+      <MessageArea showSideBar={showSideBar} setShowSideBar={setShowSideBar} />
+    </div>
   );
 };
 

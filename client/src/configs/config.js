@@ -1,4 +1,5 @@
 const BACK_URL = import.meta.env.VITE_API_BASE_URL;
+import { io } from "socket.io-client";
 
 const toastOptions = {
   style: {
@@ -7,4 +8,6 @@ const toastOptions = {
   },
 }
 
-export { BACK_URL, toastOptions };
+const socket = io(`${BACK_URL}`);
+
+export { BACK_URL, toastOptions, socket };

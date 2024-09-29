@@ -1,8 +1,9 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import "../styles/register.scss";
 import { Link, Navigate } from "react-router-dom";
 import { BACK_URL } from "../configs/config";
 import { toast } from "react-hot-toast";
+import UserAuthContext from "../hooks/UserAuthContext";
 
 const Signup = () => {
   const passRef = useRef(null);
@@ -15,6 +16,7 @@ const Signup = () => {
   const [dp, setDp] = useState(null);
   const [redirect, setRedirect] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { userInfo, setUserInfo } = useContext(UserAuthContext);
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -71,7 +73,7 @@ const Signup = () => {
     }
   }
 
-  if (redirect) {
+  if (redirect || Object.keys(userInfo) > 0) {
     return <Navigate to={"/"} />
   }
 

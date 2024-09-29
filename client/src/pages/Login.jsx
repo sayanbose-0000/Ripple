@@ -1,8 +1,9 @@
 import "../styles/register.scss";
 import { Link, Navigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { BACK_URL } from "../configs/config";
 import toast from "react-hot-toast";
+import UserAuthContext from "../hooks/UserAuthContext";
 
 const Login = () => {
   const passRef = useRef(null);
@@ -11,6 +12,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { userInfo, setUserInfo } = useContext(UserAuthContext);
+
 
   const handleTooglePassVisibility = (e) => {
     if (passRef.current.type === "password") {
@@ -48,7 +51,7 @@ const Login = () => {
     setLoading(false);
   }
 
-  if (redirect) {
+  if (redirect || Object.keys(userInfo) > 0) {
     return <Navigate to={"/"} />
   }
 

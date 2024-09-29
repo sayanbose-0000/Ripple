@@ -3,7 +3,6 @@ import { v2 as cloudinary } from "cloudinary";
 import multer from "multer";
 dotenv.config();
 
-
 const PORT = process.env.PORT;
 const FRONT_URL = process.env.FRONT_URL;
 const MONGO_URI = process.env.MONGO_URI;
@@ -18,6 +17,14 @@ const corsOptions = {
   methods: ["GET", "POST", "PUT"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
+}
+
+const ioOptions = {
+  cors: {
+    origin: FRONT_URL,
+    methods: ["GET", "POST", "PUT"],
+    credentials: true
+  }
 }
 
 cloudinary.config({
@@ -37,4 +44,4 @@ const cloudinaryOptions = {
   overwrite: true,
 }
 
-export { PORT, FRONT_URL, corsOptions, MONGO_URI, UPLOAD, NODE_ENV, JWT_SECRET, cloudinaryOptions };
+export { PORT, FRONT_URL, corsOptions, MONGO_URI, UPLOAD, NODE_ENV, JWT_SECRET, cloudinaryOptions, ioOptions };
