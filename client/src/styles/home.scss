@@ -5,9 +5,6 @@
   display: flex;
 }
 
-.messagearea {
-  flex-grow: 1;
-}
 
 .contactarea {
   height: calc(100vh - 20px);
@@ -17,7 +14,7 @@
   border-radius: 20px;
   padding: 10px;
   position: absolute;
-  transition: transform 0.5s ease;
+  transition: transform 0.5s ease-in-out;
 
   @media only screen and (max-width: 380px) {
     width: calc(100% - 20px);
@@ -130,6 +127,7 @@
 }
 
 .messagearea {
+  flex-grow: 1;
   padding: 10px;
 
   .info {
@@ -199,4 +197,80 @@
     }
   }
 
+  .send_message_container {
+    display: flex;
+    padding: 10px 0 10px 0;
+
+    .messageinput,
+    .sendmessage {
+      padding: 10px;
+      background-color: #202020;
+      // border: 2px solid whitesmoke;
+      color: whitesmoke;
+      height: 40px;
+    }
+
+    .messageinput {
+      flex-grow: 1;
+      border-radius: 5px 0 0 5px;
+      resize: none;
+      padding-right: 2.5px;
+    }
+
+    .sendmessage {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+      padding-left: 2.5px;
+    }
+
+    .sendmessage:hover {
+      img {
+        transition: 0.1s transform ease;
+        transform: translateX(2px);
+      }
+    }
+
+    @media only screen and (max-width: 320px) {
+      .messageinput,
+      .sendmessage {
+        font-size: 0.9px;
+      }
+    }
+  }
+
+}
+
+.message-container {
+  height: calc(100vh - 80px - 20px - 40px - 10px);
+  overflow-y: scroll;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  // margin-right: -8px;
+
+  .message {
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 45%;
+  }
+
+  .me {
+    background-color: #353535;
+    align-self: flex-start;
+  }
+
+  .them {
+    background-color: #6BAF8D;
+    align-self: flex-end;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .message {
+      max-width: 90%;
+    }
+  }
 }
