@@ -1,7 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Message from "./Message";
+import { socket } from "../configs/config";
 
 const MessageArea = ({ showContactAreaRef }) => {
+
+  const [messageValue, setMessageValue] = useState("");
 
   const hideSideBarOnClickOutside = (e) => {
     const firstImgListener = document.querySelector(".expand");
@@ -11,13 +14,25 @@ const MessageArea = ({ showContactAreaRef }) => {
   }
 
   useEffect(() => {
-    const messageAreaListener = document.querySelector(".messagearea")
+    const messageAreaListener = document.querySelector(".messagearea");
     messageAreaListener.addEventListener("click", hideSideBarOnClickOutside);
 
     return () => {
       messageAreaListener.removeEventListener("click", hideSideBarOnClickOutside);
     };
   }, [])
+
+  const handleMessageSend = (e) => {
+    e.preventDefault();
+
+    console.log(messageValue);
+
+    socket.emit('joinRoom', 'some room');
+
+    socket.on('hello', (msg) => {
+      console.log('Message from server:', msg);
+    });
+  }
 
   return (
     <div className="messagearea" >
@@ -35,129 +50,11 @@ const MessageArea = ({ showContactAreaRef }) => {
         <Message propClass="me" />
         <Message propClass="them" />
         <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="me" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="them" />
-        <Message propClass="me" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="me" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="them" />
-        <Message propClass="me" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="them" />
-        <Message propClass="me" />
-        <Message propClass="me" />
-        <Message propClass="me" />
       </div>
 
-      <form className="send_message_container">
-        <input type="" name="messageinput" id="messageinput" className="messageinput" />
-        {/* <textarea name="messageinput" id="messageinput" className="messageinput"></textarea> */}
+      <form className="send_message_container" onSubmit={e => handleMessageSend(e)}>
+        {/* <input type="" name="messageinput" id="messageinput" className="messageinput" /> */}
+        <textarea name="messageinput" id="messageinput" className="messageinput" placeholder="Enter message..." onChange={(e) => { setMessageValue(e.target.value) }}></textarea>
         <button type="submit" className="sendmessage"><img src="send.svg" alt="Send" /></button>
       </form>
     </div>

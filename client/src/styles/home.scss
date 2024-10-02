@@ -1,7 +1,6 @@
 .home {
   display: flex;
   height: 100vh;
-
   display: flex;
 }
 
@@ -15,6 +14,7 @@
   padding: 10px;
   position: absolute;
   transition: transform 0.5s ease-in-out;
+  box-shadow: rgba(243, 243, 243, 0.05) 0px 6px 24px 0px, rgba(255, 255, 255, 0.08) 0px 0px 0px 1px;
 
   @media only screen and (max-width: 380px) {
     width: calc(100% - 20px);
@@ -199,12 +199,16 @@
 
   .send_message_container {
     display: flex;
-    padding: 10px 0 10px 0;
+    margin: 10px 0 10px 0;
+    // outline: 1px solid whitesmoke;
+    border-radius: 50px;
+    background-color: #353535;
+    padding: 10px;
 
     .messageinput,
     .sendmessage {
       padding: 10px;
-      background-color: #202020;
+      background-color: #353535;
       // border: 2px solid whitesmoke;
       color: whitesmoke;
       height: 40px;
@@ -215,6 +219,7 @@
       border-radius: 5px 0 0 5px;
       resize: none;
       padding-right: 2.5px;
+      overflow-y: auto;
     }
 
     .sendmessage {
@@ -226,26 +231,19 @@
       padding-left: 2.5px;
     }
 
-    .sendmessage:hover {
-      img {
-        transition: 0.1s transform ease;
-        transform: translateX(2px);
-      }
-    }
-
     @media only screen and (max-width: 320px) {
+
       .messageinput,
       .sendmessage {
-        font-size: 0.9px;
+        font-size: 0.9rem;
       }
     }
   }
-
 }
 
 .message-container {
-  height: calc(100vh - 80px - 20px - 40px - 10px);
-  overflow-y: scroll;
+  height: calc(100vh - 80px - 20px - 40px - 30px);
+  overflow-y: auto;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -256,6 +254,7 @@
     padding: 10px;
     border-radius: 10px;
     max-width: 45%;
+    cursor: default;
   }
 
   .me {

@@ -103,7 +103,6 @@ const login = async (req, res) => {
 const profile = (req, res) => {
   const { token } = req.cookies;
 
-
   if (token) {
     const profileInfo = jwt.verify(token, JWT_SECRET);
     res.status(200).json({ message: profileInfo });
@@ -115,4 +114,25 @@ const profile = (req, res) => {
   }
 }
 
-export { signup, login, profile };
+const search = async (req, res) => {
+  const emailorusername = req.query.emailorusername;
+  // console.log(emailorusername);
+  const userSearchDoc = await UserModel.find({
+    $or: [ // $or will search either email or username
+      { email: { $regex: `^${emailorusername}`, $options: "i" } }, // for partial search that is if I type abc, all people with abc in their email, username shows eg, abc0000@gmail.com, abcdefg@gmail.com etc.
+      { username: { $regex: `^${emailorusername}`, $options: "i" } } // ^ starts searching from first character.  options: "i" is for case insensitive search
+    ]
+  });
+
+  const searchResult = userSearchDoc.map(item => ({
+    id: item._id,
+    dp: item.dpUrl,
+    username: item.username,
+    email: item.email,
+  }))
+
+  // console.log(userSearchDoc);
+  res.status(200).json({ message: searchResult });
+}
+
+export { signup, login, profile, search };

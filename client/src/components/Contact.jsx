@@ -1,10 +1,10 @@
-const Contact = () => {
+const Contact = ({ username, email, dp }) => {
   return (
     <div className="contact">
-      <img src="user.svg" alt="person" />
+      <img src={dp} alt="person" />
       <div className="info">
-        <p className="name">John Abraham</p>
-        <p className="email">johnabraham0000@gmail.com</p>
+        <p className="name">{username}</p>
+        <p className="email">{email}</p>
       </div>
     </div>
   );
