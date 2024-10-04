@@ -1,10 +1,12 @@
 import Contact from "./Contact";
 import { BACK_URL } from "../configs/config";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import UserAuthContext from "../hooks/UserAuthContext";
 
-const ContactArea = ({ showContactAreaRef }) => {
+const ContactArea = ({ showContactAreaRef, setCurrentPerson, currentPerson }) => {
   const [searchEmailUsername, setSearchEmailUsername] = useState("");
   const [contactResponse, setContactsResponse] = useState([]);
+  const { userInfo, setUserInfo } = useContext(UserAuthContext);
 
   // const handleSearch = async (e) => {
   //   const response = await fetch(`${BACK_URL}/auth/search/?emailorusername=${searchEmailUsername}`, {
@@ -36,6 +38,11 @@ const ContactArea = ({ showContactAreaRef }) => {
     }
   }, [searchEmailUsername]);
 
+  const handleContactSelect = (e) => {
+    console.log(e);
+    console.log("meow");
+  }
+
   return (
     <div className="contactarea hidecontactarea" ref={showContactAreaRef}>
       {/* <div className="search-box" onChange={e => handleSearch(e)}> */}
@@ -47,9 +54,12 @@ const ContactArea = ({ showContactAreaRef }) => {
 
       <div className="contact-container">
         {
-          contactResponse.map(item => (
-            <Contact key={item.id} username={item.username} email={item.email} dp={item.dp} />
-          ))
+          contactResponse.length > 0 ?
+            contactResponse.map(item => (
+              <Contact key={item.id} username={userInfo.username == item.username ? `${item.username} (me)` : item.username} email={item.email} dp={item.dp} onClick={e => handleContactSelect(e)} currentPerson={currentPerson} setCurrentPerson={setCurrentPerson} showContactAreaRef={showContactAreaRef} />
+            ))
+            :
+            <p className="no_contact">No contacts</p>
         }
       </div>
     </div>

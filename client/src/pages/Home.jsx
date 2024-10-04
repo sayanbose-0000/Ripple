@@ -11,6 +11,7 @@ const Home = () => {
   const [redirect, setRedirect] = useState(false);
   const [showSideBar, setShowSideBar] = useState(false);
   const showContactAreaRef = useRef("contactarea hidecontactarea");
+  const [currentPerson, setCurrentPerson] = useState({});
 
   useEffect(() => {
     const verifyUser = async () => {
@@ -41,8 +42,8 @@ const Home = () => {
 
   return (
     <div className="home">
-      <ContactArea showContactAreaRef={showContactAreaRef} />
-      <MessageArea showContactAreaRef={showContactAreaRef} />
+      <ContactArea showContactAreaRef={showContactAreaRef} setCurrentPerson={setCurrentPerson} currentPerson={currentPerson} />
+      <MessageArea showContactAreaRef={showContactAreaRef} currentPerson={currentPerson} />
     </div>
   );
 };

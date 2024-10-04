@@ -2,8 +2,13 @@ const socketConnection = (io) => {
 
   // when user connects (connection event)
   io.on("connection", (socket) => {
-    socket.join('some room');
-    io.to('some room').emit('hello', 'world');
+    socket.on("join-room", (room) => {
+      socket.join(room);
+    })
+
+    socket.on("message", (room, msg) => {
+      io.to(room).emit("message", msg);
+    })
   })
 }
 

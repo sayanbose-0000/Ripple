@@ -120,7 +120,8 @@ const search = async (req, res) => {
   const userSearchDoc = await UserModel.find({
     $or: [ // $or will search either email or username
       { email: { $regex: `^${emailorusername}`, $options: "i" } }, // for partial search that is if I type abc, all people with abc in their email, username shows eg, abc0000@gmail.com, abcdefg@gmail.com etc.
-      { username: { $regex: `^${emailorusername}`, $options: "i" } } // ^ starts searching from first character.  options: "i" is for case insensitive search
+      { username: { $regex: `^${emailorusername}`, $options: "i" } } // ^ starts searching from first character and not from middle.
+      // options: "i" is for case insensitive search
     ]
   });
 
