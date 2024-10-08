@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 import { createServer } from 'node:http';
 import { Server } from 'socket.io';
 import { socketConnection } from './src/helpers/socketConnection.js';
+import chatRouter from './src/routers/chatRouter.js';
 
 const app = express();
 const server = createServer(app);
@@ -21,6 +22,7 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 
 app.use("/auth", authRoutes);
+app.use("/chat", chatRouter);
 
 server.listen(PORT, () => {
   console.log(`Example app listening on port http://localhost:${PORT}`);

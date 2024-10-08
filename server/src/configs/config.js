@@ -24,6 +24,9 @@ const ioOptions = {
     origin: FRONT_URL,
     methods: ["GET", "POST", "PUT"],
     credentials: true
+  },
+  connectionStateRecovery: {
+    maxDisconnectionDuration: 2 * 60 * 1000,
   }
 }
 

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import Message from "./Message";
-import { socket } from "../configs/config";
+import { BACK_URL, simpleCrypto, socket } from "../configs/config";
 import UserAuthContext from "../hooks/UserAuthContext";
 
 const MessageArea = ({ showContactAreaRef, currentPerson }) => {
@@ -41,11 +41,31 @@ const MessageArea = ({ showContactAreaRef, currentPerson }) => {
   }, [])
 
   useEffect(() => {
-    if (room) {
-      socket.on("message", (msg) => {
-        setMessages(messages => [...messages, msg]);
-      });
-    }
+    (async () => {
+      if (room) {
+        const response = await fetch(`${BACK_URL}/chat/messagesearch?room=${room}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" }
+        })
+  
+        const msgFetched = await response.json();
+  
+        setMessages(msgFetched.message || []);
+        
+        socket.on("message", (msg) => {
+          setMessages(prevMessages => [...prevMessages, msg]);
+        });
+      }
+
+      else {
+        setMessages([]);
+      }
+
+    })();
+
+    return (() => {
+      socket.off("message");
+    })
   }, [room])
 
   useEffect(() => {
@@ -55,12 +75,24 @@ const MessageArea = ({ showContactAreaRef, currentPerson }) => {
   const handleMessageSend = (e) => {
     e.preventDefault();
 
+    const newDate = new Date();
+    const hours = newDate.getHours() // if 0, display 12'o clock
+    const minutes = newDate.getMinutes();
+
+    const day = newDate.getDate();
+    const month = newDate.getMonth() + 1; // 0 index
+    const year = newDate.getFullYear();
+
+    const time = `${hours}:${minutes}`;
+    const date = `${day}/${month}/${year}`;
+
     if (messageValue != "") {
-      socket.emit("message", room, { sender: userInfo.email, messageValue: messageValue });
+      const cipherTextMessage = simpleCrypto.encrypt(messageValue);
+      socket.emit("message", room, { sender: userInfo.email, messageValue: cipherTextMessage, date: date, time: time });
     }
 
-    focusRef.current.focus();
     setMessageValue("");
+    focusRef.current.focus();
   }
 
   return (
@@ -81,7 +113,7 @@ const MessageArea = ({ showContactAreaRef, currentPerson }) => {
         {
           Object.keys(currentPerson).length > 0 ?
             messages.map((item, index) => {
-              return <Message propClass={item.sender == userInfo.email ? "me" : "them"} messageText={item.messageValue} key={index} />
+              return <Message key={index} propClass={item.sender == userInfo.email ? "me" : "them"} messageText={item.messageValue} date={item.date} time={item.time} />
             })
             :
             <p className="no_messages">Please Select a Contact</p>

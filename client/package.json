@@ -15,6 +15,7 @@
     "react-hot-toast": "^2.4.1",
     "react-router-dom": "^6.26.1",
     "sass": "^1.78.0",
+    "simple-crypto-js": "^3.0.1",
     "socket.io-client": "^4.8.0"
   },
   "devDependencies": {

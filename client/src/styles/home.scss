@@ -65,6 +65,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    padding-bottom: 65px;
 
     .no_contact {
       width: 100%;
@@ -74,6 +75,39 @@
       justify-content: center;
       align-items: center;
       text-align: center;
+    }
+
+    .myprofile {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+
+      padding: 10px;
+      height: 65px;
+      width: 100%;
+      background-color: black;
+      border-radius: 0 0 20px 20px;
+      display: flex;
+      justify-content: space-between;
+      // gap: 5px;
+      align-items: center;
+
+      .my-dp {
+        height: 35px;
+        width: 35px;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+
+      button {
+        background-color: transparent;
+        color: whitesmoke;
+        cursor: pointer;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
   }
 
@@ -278,13 +312,22 @@
     border-radius: 10px;
     max-width: 45%;
     cursor: default;
+
+    .date_time {
+      display: flex;
+      justify-content: space-between;
+
+      font-size: 0.7rem;
+      gap: 10px;
+      color: rgba(255, 255, 255, 0.442);
+    }
   }
 
   .me {
     background-color: #6BAF8D;
     align-self: flex-end;
   }
-  
+
   .them {
     background-color: #353535;
     align-self: flex-start;

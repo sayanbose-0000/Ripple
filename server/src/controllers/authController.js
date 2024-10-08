@@ -136,4 +136,14 @@ const search = async (req, res) => {
   res.status(200).json({ message: searchResult });
 }
 
-export { signup, login, profile, search };
+const logout = (req, res) => {
+  try {
+    res.cookie("token", "");
+    res.status(200).json(null);
+  }
+  catch (err) {
+    res.status(500).json({ message: "Error logging out" });
+  }
+}
+
+export { signup, login, profile, search, logout };
